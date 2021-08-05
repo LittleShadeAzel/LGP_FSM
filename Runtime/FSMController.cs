@@ -18,10 +18,6 @@ namespace LGP.FSM {
         /// The manifest of the FSMController's FSMStates.
         /// </summary>
         public Dictionary<int, FSMState> states = new Dictionary<int, FSMState>();
-        /// <summary>
-        /// If true, the FSMController can't change the active FSMState.
-        /// </summary>
-        public bool isStateLocked;
         private int currentStateId = -1;
         private int previousStateId = -1;
 		#endregion
@@ -36,6 +32,11 @@ namespace LGP.FSM {
         /// Gets the id of the active FSMState.
         /// </summary>
         public int StateId { get => currentStateId; }
+
+        /// <summary>
+        /// If true, the FSMController can't change the active FSMState.
+        /// </summary>
+        public bool IsStateLocked { get; set; }
 		#endregion
 		
         #region Constructor
@@ -74,7 +75,7 @@ namespace LGP.FSM {
             FSMState newState = states[id];
 
             // Handle state lock and empty state.
-            if (newState == null || isStateLocked) return;
+            if (newState == null || IsStateLocked) return;
 
             // Handle same State.
             if (id == currentStateId) {
@@ -84,7 +85,7 @@ namespace LGP.FSM {
 
             // Handle state Exiting.
             if (State != null) {
-                State.SetTransitioning(true);
+                State.SetTransition(true);
                 State.onStateExit?.Invoke();
             }
 
@@ -92,7 +93,7 @@ namespace LGP.FSM {
             previousStateId = currentStateId;
             currentStateId = id;
             if (id != currentStateId && !useReenter) State.onStateEnter?.Invoke();
-            State.SetTransitioning(false);
+            State.SetTransition(false);
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace LGP.FSM {
         public void UpdateStateController() {
             if (State == null) return;
             if (State.onStateTick == null) return;
-            if (State.isFixedUpdate) return;
+            if (State.IsFixedUpdate) return;
             if (!State.IsTransitioning) SetState(State.onStateTick.Invoke());
         }
 
@@ -111,7 +112,7 @@ namespace LGP.FSM {
         public void UpdateStateControllerFixed() {
             if (State == null) return;
             if (State.onStateTick == null) return;
-            if (!State.isFixedUpdate) return;
+            if (!State.IsFixedUpdate) return;
             if (!State.IsTransitioning) SetState(State.onStateTick.Invoke());
         }
         #endregion

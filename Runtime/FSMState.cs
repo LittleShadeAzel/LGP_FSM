@@ -23,18 +23,17 @@ namespace LGP.FSM {
         public OnStateTickCallback onStateTick;
         public OnStateExitCallback onStateExit;
         public OnStateReenterCallback onStateReenter;
-        private bool isTransitioning;
-        /// <summary>
-        /// Determines whether or not the state is going to be updated in the Fixed Update or not.
-        /// </summary>
-        public bool isFixedUpdate = false;
 		#endregion
 
 		#region Properties
         /// <summary>
         /// It shows if the FSMState is transitioning into another FSMState. It's used by the FSMController to determine when a FSMState is done and shouldn't be updated anymore.
         /// </summary>
-        public bool IsTransitioning { get => isTransitioning; }
+        public bool IsTransitioning { get; private set; }
+        /// <summary>
+        /// Determines whether or not the state is going to be updated in the Fixed Update or not.
+        /// </summary>
+        public bool IsFixedUpdate { get; set; }
 		#endregion
 
 		#region Contructors
@@ -52,8 +51,8 @@ namespace LGP.FSM {
         /// Sets the flag for the FSMState to end and transition into another one.
         /// </summary>
         /// <param name="value"></param>
-        public void SetTransitioning(bool value) {
-            isTransitioning = value;
+        public void SetTransition(bool value) {
+            IsTransitioning = value;
 		}
 		#endregion
 	}
