@@ -1,0 +1,17 @@
+{
+  "name": "com.lgp.fsm",
+  "version": "1.0.0",
+  "description": "A very simple Finite State Machine using integer returns to enter states.",
+  "displayName": "Finite State Machine",
+  "unity": "2018.3",
+  "author": {
+    "name": "Alexander Cvetanovic"
+  },
+  "keywords": [
+    "FSM",
+    "Finite State Machine",
+    "Pattern"
+  ],
+  "license": "See LICENSE.md",
+  "type": "library"
+}
