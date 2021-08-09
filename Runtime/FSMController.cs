@@ -92,7 +92,7 @@ namespace LGP.FSM {
 			// Handle State Entering.
 			previousStateId = currentStateId;
 			currentStateId = id;
-			if (id != currentStateId && !useReenter) State.onStateEnter?.Invoke();
+			if (id != previousStateId && !useReenter) State.onStateEnter?.Invoke();
 			State.SetTransition(false);
 		}
 
